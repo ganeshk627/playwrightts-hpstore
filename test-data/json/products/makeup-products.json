@@ -1,0 +1,24 @@
+[
+    {
+        "productCategory": "Makeup",
+        "productType": "Face",
+        "productNames": [
+            "Delicate Oil-Free Powder Blush"
+        ]
+    },
+    {
+        "productCategory": "Makeup",
+        "productType": "Cheeks",
+        "productNames": [
+            "Skinsheen Bronzer Stick",
+            "Benefit Bella Bamba"
+        ]
+    },
+    {
+        "productCategory": "Makeup",
+        "productType": "Eyes",
+        "productNames": [
+            "Waterproof Protective Undereye Concealer"
+        ]
+    }
+]

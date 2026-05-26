@@ -1,0 +1,27 @@
+{
+  "name": "playwright-ts-htc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:chrome": "npx playwright test --headed --project=chrome",
+    "test:env:dev": "ENV=dev npx playwright test",
+    "test:env:qa": "ENV=qa npx playwright test",
+    "test:env:automation": "ENV=automation npx playwright test"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "8.0.2",
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.6",
+    "allure-commandline": "^2.25.0",
+    "allure-playwright": "^2.9.2",
+    "dotenv": "^16.3.1",
+    "moment-timezone": "^0.5.43",
+    "winston": "^3.11.0"
+  }
+}
