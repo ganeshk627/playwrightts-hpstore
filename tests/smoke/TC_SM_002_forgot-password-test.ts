@@ -1,9 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
-import { LoginPage } from '../../page-objects/login/login-page-object';
+import { LoginPage } from '../../pages/login/login-page-object';
 import logger from '../../utils/winston-logger/logger-util';
-import { ForgotPasswordPage } from '../../page-objects/forgot-password/forgot-password-page-object';
+import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password-page-object';
 import { faker } from '@faker-js/faker';
-import { HomePage } from '../../page-objects/homepage/homepage-page-object';
+import { HomePage } from '../../pages/homepage/homepage-page-object';
 // const { faker } = require('@faker-js/faker');
 
 

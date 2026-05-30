@@ -22,7 +22,7 @@ export class LoginPage {
         this.passwordInput = page.locator('input[type="password"]');
         this.signInBtn = page.getByRole('button', { name: 'Sign In' });
         // Links on login page
-        this.forgotPasswordLink = page.getByText('Forget your password');
+        this.forgotPasswordLink = page.getByText('Forgot your password?');
         this.createAccountLink = page.getByText('Create an account');
     };
 

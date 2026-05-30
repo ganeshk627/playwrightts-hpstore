@@ -14,10 +14,10 @@ export class HomePage {
     constructor (private page:Page) {
         this.page = page;
         // LOGIN link in navigation
-        this.loginLink = page.getByRole('link', { name: 'LOGIN' });
+        this.loginLink = page.locator('ul').getByRole('link', { name: 'LOGIN' });
         // Navigation links
-        this.homeNav = page.getByRole('link', { name: 'HOME' });
-        this.collectionNav = page.getByRole('link', { name: 'COLLECTION' });
+        this.homeNav = page.locator('ul').getByRole('link', { name: 'HOME' });
+        this.collectionNav = page.locator('ul').getByRole('link', { name: 'COLLECTION' });
         
     };   
 

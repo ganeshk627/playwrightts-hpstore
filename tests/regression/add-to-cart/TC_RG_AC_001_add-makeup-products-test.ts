@@ -1,6 +1,6 @@
 import {test, expect, type Page} from '@playwright/test';
-import { HomePage } from "../../../page-objects/homepage/homepage-page-object";
-import { LoginPage } from "../../../page-objects/login/login-page-object";
+import { HomePage } from "../../../pages/homepage/homepage-page-object";
+import { LoginPage } from "../../../pages/login/login-page-object";
 import logger from '../../../utils/winston-logger/logger-util';
 
 test('Add Makeup Products @smoke', async({page})=>{

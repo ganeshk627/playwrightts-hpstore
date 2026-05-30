@@ -1,15 +1,15 @@
 import {test, expect, type Page} from '@playwright/test';
-import { HomePage } from "../../page-objects/homepage/homepage-page-object";
-import { LoginPage } from "../../page-objects/login/login-page-object";
+import { HomePage } from "../../pages/homepage/homepage-page-object";
+import { LoginPage } from "../../pages/login/login-page-object";
 import logger from '../../utils/winston-logger/logger-util';
-import { DashboardPage } from '../../page-objects/dashboard/dashboard-page-object';
-import { ProductNavigationPage } from '../../page-objects/products/product-navigation-page-object';
+import { DashboardPage } from '../../pages/dashboard/dashboard-page-object';
+import { ProductNavigationPage } from '../../pages/products/product-navigation-page-object';
 
-const productCategory = 'Makeup';
-const productType = 'Face';
-const productName = 'Delicate Oil-Free Powder Blush';
+const productCategory = 'Men';
+const productType = 'Topwear';
+const productName = 'Gryffindor Quidditch Jersey';
 
-test('Login Test @smoke', async({page})=>{
+test('Add Product Test @smoke', async({page})=>{
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
@@ -24,10 +24,8 @@ test('Login Test @smoke', async({page})=>{
         dashboardPage.verifyWelcomeMessage();
     });
 
-    await test.step('Navigating to Makeup products page',async () => {
-        // await productNavigationPage.switchToProduct(productCategory);
-        await productNavigationPage.switchToProduct(productCategory, productType)
-        await productNavigationPage.toggleProductView('grid');
+    await test.step('Navigating to Men Topwear products page',async () => {
+        await productNavigationPage.switchToProduct(productCategory, productType);
     });
 
     await test.step(`Adding ${productName} to cart`,async () => {

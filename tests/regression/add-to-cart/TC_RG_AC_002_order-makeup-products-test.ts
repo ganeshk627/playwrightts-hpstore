@@ -1,10 +1,10 @@
 import {test, expect, type Page} from '@playwright/test';
-import { HomePage } from "../../../page-objects/homepage/homepage-page-object";
-import { LoginPage } from "../../../page-objects/login/login-page-object";
+import { HomePage } from "../../../pages/homepage/homepage-page-object";
+import { LoginPage } from "../../../pages/login/login-page-object";
 import logger from '../../../utils/winston-logger/logger-util';
-import { DashboardPage } from '../../../page-objects/dashboard/dashboard-page-object';
-import { ProductNavigationPage } from '../../../page-objects/products/product-navigation-page-object';
-import { ProductBasketPage } from '../../../page-objects/products/product-basket-page-object';
+import { DashboardPage } from '../../../pages/dashboard/dashboard-page-object';
+import { ProductNavigationPage } from '../../../pages/products/product-navigation-page-object';
+import { ProductBasketPage } from '../../../pages/products/product-basket-page-object';
 
 const productCategory = 'Makeup';
 const productType = 'Face';

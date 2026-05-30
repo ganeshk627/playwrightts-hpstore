@@ -1,6 +1,7 @@
 import { type Locator, type Page, expect} from "@playwright/test";
 import { CheckoutConfirmationPage } from "./checkout/checkout-confirmation-page-object";
 import { DashboardPage } from "../dashboard/dashboard-page-object";
+import logger from "../../utils/winston-logger/logger-util";
 
 
 export class ProductBasketPage {
@@ -9,6 +10,7 @@ export class ProductBasketPage {
     private readonly checkoutButton1: Locator;
     private readonly checkoutButton2: Locator;
     private readonly continueShoppingButton: Locator;
+    private readonly continueButton: Locator;
   
 
 
@@ -18,6 +20,7 @@ export class ProductBasketPage {
         this.checkoutButton1 = page.locator('#cart_checkout1');
         this.checkoutButton2 = page.locator('#cart_checkout2');
         this.continueShoppingButton = page.getByRole('link', { name: 'Continue Shopping' });
+        this.continueButton = page.getByRole('link', { name: 'Continue' });
     };   
 
     // methods
@@ -41,13 +44,7 @@ export class ProductBasketPage {
         return new DashboardPage(this.page);
     }
 
-
-
-
-   
-
-    
-
-
-
-};
+    async clickContinue() {
+        await this.continueButton.click();
+        logger.info('Clicked Continue button');
+    }

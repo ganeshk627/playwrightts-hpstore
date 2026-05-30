@@ -12,12 +12,12 @@ export class ProductViewPage {
     //constructor
     constructor (private page:Page) {
         this.page = page;
-        this.addToCartButton = page.getByRole('link', { name: 'Add to Cart' });
+        this.addToCartButton = page.getByRole('button', { name: 'Add To Cart' });
     };   
 
     // methods
     async addProductToCart(productName:string) {
-        await expect(this.page.locator('h1.productname')).toContainText(productName);
+        await expect(this.page.locator('h1').filter({ hasText: productName }).first()).toBeVisible();
         await this.addToCartButton.click();
         return new ProductBasketPage(this.page);
     };
