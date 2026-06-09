@@ -3,7 +3,7 @@
 ## Skill 1: Page Object Model Implementation
 
 ### Description
-Create and maintain page objects following the framework's Page Object Model pattern. Each page has two potential files: a page class (in `pages/`) with Playwright interactions, and a page object class (in `page-objects/`) with business logic.
+Create and maintain page objects following the framework's Page Object Model pattern. Each page has two potential files: a page class (in `pages/`) with Playwright interactions, and a page object class (in `pages/`) with business logic.
 
 ### When to Use
 - Creating new page objects for new features
@@ -13,12 +13,11 @@ Create and maintain page objects following the framework's Page Object Model pat
 
 ### Key Files
 - `pages/` - Locator definitions and direct Playwright operations (optional, for complex pages)
-- `page-objects/` - Business logic and helper methods wrapping page interactions
-- Example: `page-objects/login/login-page-object.ts` contains LoginPage class
+- Example: `pages/login/login.page.ts` contains LoginPage class
 
 ### Implementation Pattern
 ```typescript
-// page-objects/[feature]/[feature]-page-object.ts
+// pages/[feature]/[feature].page.ts
 import { type Locator, type Page, expect } from "@playwright/test";
 import logger from '../../utils/winston-logger/logger-util';
 
@@ -55,23 +54,23 @@ export class [FeatureName]Page {
 
 ### Directory Structure
 ```
-page-objects/
+pages/
 ├── dashboard/
-│   └── dashboard-page-object.ts
+│   └── dashboard.page.ts
 ├── login/
-│   └── login-page-object.ts
+│   └── login.page.ts
 ├── homepage/
-│   └── homepage-page-object.ts
+│   └── homepage.page.ts
 ├── forgot-password/
-│   └── forgot-password-page-object.ts
+│   └── forgot-password.page.ts
 └── products/
-    ├── product-view-page-object.ts
-    ├── product-basket-page-object.ts
-    ├── product-navigation-page-object.ts
+    ├── product-view.page.ts
+    ├── product-basket.page.ts
+    ├── product-navigation.page.ts
     └── checkout/
-        ├── checkout-payment-page-object.ts
-        ├── checkout-confirmation-page-object.ts
-        └── checkout-success-page-object.ts
+        ├── checkout-payment.page.ts
+        ├── checkout-confirmation.page.ts
+        └── checkout-success.page.ts
 ```
 
 ---
@@ -121,13 +120,15 @@ tests/
 ### Test Structure Pattern
 ```typescript
 import { test, expect, type Page } from '@playwright/test';
-import { PageObject } from '../../page-objects/...';
-import { AnotherPageObject } from '../../page-objects/...';
+import { HomePage } from '../../pages/homepage/homepage.page';
+import { LoginPage } from '../../pages/login/login.page';
+import { AddMakeupProductsPage } from '../../pages/add-to-cart/add-makeup-products.page';
 import logger from '../../utils/winston-logger/logger-util';
 
 test('Descriptive test name explaining what is tested @smoke', async ({ page }) => {
-    const pageObject = new PageObject(page);
-    const anotherPageObject = new AnotherPageObject(page);
+    const homePage = new HomePage(page);
+    const loginPage = new LoginPage(page);
+    const addMakeupProductsPage = new AddMakeupProductsPage(page);
     
     await test.step('Setup: Navigate to application', async () => {
         await page.goto('/');
@@ -135,17 +136,17 @@ test('Descriptive test name explaining what is tested @smoke', async ({ page }) 
     });
     
     await test.step('Setup: Perform login', async () => {
-        await pageObject.login(process.env.USERNAME!, process.env.PASSWORD!);
+        await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);
         logger.info('Successfully logged in');
     });
     
     await test.step('Action: Perform main action', async () => {
-        await pageObject.performAction();
+        await addMakeupProductsPage.performAction();
         logger.info('Action completed');
     });
     
     await test.step('Assert: Verify results', async () => {
-        await expect(page).toHaveURL(/.*\/expected-page/);
+        await expect(page).toHaveURL(/.*\/expected.page/);
         await expect(page.locator('selector')).toBeVisible();
     });
 });
@@ -326,7 +327,7 @@ npm run test:env:automation     # Automation environment - use in CI
 // No manual loading needed - available in process.env
 
 const username = process.env.USERNAME;
-const baseUrl = process.env.URL;
+const baseUrl = process.env.BASE_URL;
 const password = process.env.PASSWORD;
 
 await loginPage.login(username!, password!);
@@ -351,7 +352,7 @@ if (!process.env.ENV) {
 
 export default defineConfig({
   use: {
-    baseURL: process.env.URL,  // Automatically set from .env
+    baseURL: process.env.BASE_URL,  // Automatically set from .env
   }
 });
 ```
@@ -547,7 +548,7 @@ retries: process.env.CI ? 2 : 0,  // 2 retries on CI, 0 locally
 ### Screenshots and Trace Configuration
 ```typescript
 use: {
-    baseURL: process.env.URL,
+    baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',      // Trace on retry
     screenshot: 'only-on-failure', // Screenshot on failure
     video: 'off'                   // Video disabled (set to 'retain-on-failure' to enable)
@@ -982,7 +983,7 @@ test-results/              # Delete for fresh results
 playwright-report/         # Generated new each run
 
 # Keep (version controlled):
-page-objects/             # Page object library
+pages/             # Page object library
 tests/                    # Test files
 test-data/               # Test data files
 environments/             # Environment configs
@@ -1058,7 +1059,7 @@ CI               - Set by CI systems (GitHub Actions, Jenkins, etc.)
 
 | Task | Skill | Key Command |
 |------|-------|-------------|
-| Create new page object | Skill 1 | Create in `page-objects/` |
+| Create new page object | Skill 1 | Create in `pages/` |
 | Write new test | Skill 2 | Follow `TC_TYPE_FEATURE_NUMBER` naming |
 | Add test data | Skill 3 | Create in `test-data/json/` |
 | Configure environment | Skill 4 | Update `.env.{environment}` |

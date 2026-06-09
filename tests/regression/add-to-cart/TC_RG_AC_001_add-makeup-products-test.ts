@@ -1,14 +1,10 @@
-import {test, expect, type Page} from '@playwright/test';
-import { HomePage } from "../../../pages/homepage/homepage-page-object";
-import { LoginPage } from "../../../pages/login/login-page-object";
+import { test, expect } from '../../../pages/fixture/fixture';
 import logger from '../../../utils/winston-logger/logger-util';
 
-test('Add Makeup Products @smoke', async({page})=>{
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
+test('Add Makeup Products @smoke', async({ page, homePage, loginPage })=>{
 
     await test.step('Login as Ganesh', async () => {
-        await page.goto('/');
+        await homePage.openApplication();
         logger.info(`Navigated to ${await page.url()}`);
         await homePage.openLoginOrRegistrationPage();
         await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);

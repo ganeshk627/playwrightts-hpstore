@@ -50,8 +50,8 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
-    // baseURL: process.env.URL ? process.env.URL : 'https://opensource-demo.orangehrmlive.com',
-    baseURL: process.env.URL,
+    // baseURL: process.env.BASE_URL ? process.env.BASE_URL : 'https://opensource-demo.orangehrmlive.com',
+    baseURL: process.env.BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

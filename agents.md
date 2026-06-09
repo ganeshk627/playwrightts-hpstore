@@ -35,7 +35,7 @@ Diagnose and fix failing tests. This agent specializes in troubleshooting test f
 
 ### Key Files to Access
 - `tests/` - Test files showing failures
-- `page-objects/` - Locator definitions
+- `pages/` - Locator definitions
 - `playwright.config.ts` - Configuration and settings
 - `environments/.env.*` - Environment variables
 
@@ -84,8 +84,8 @@ Create and maintain page objects following the framework's POM pattern. This age
 6. **Support Chaining** - Enable method chaining where appropriate
 
 ### Key Files to Create/Modify
-- `page-objects/[feature]/[feature]-page-object.ts`
-- Optional: `pages/[feature]/[feature]-page.ts` (if needed)
+- `pages/[feature]/[feature].page.ts`
+- Optional: `pages/[feature]/[feature].page.ts` (if needed)
 
 ### Framework Patterns to Follow
 ```typescript
@@ -135,7 +135,9 @@ Create new test cases following the framework's standards. This agent specialize
 - Organize tests by type (smoke, regression, inspection)
 - Use test.step() for clear test flow
 - Integrate page objects properly
-- Add comprehensive logging and assertions
+- Add comprehensive logging and assertions within page objects
+- Ensure test files contain NO expect or page references
+- Pass page objects exclusively via fixtures
 - Structure test data handling
 - Tag tests appropriately
 
@@ -166,22 +168,23 @@ tests/
 
 ### Test Structure Pattern
 ```typescript
-test('Descriptive test name @tag', async ({ page }) => {
-    const pageObject = new PageObject(page);
+test('Descriptive test name @tag', async ({ loginPage }) => {
     
     await test.step('Setup: action', async () => {
-        // Setup code with logger
+        // Setup code via page object methods
+        await loginPage.navigate();
         logger.info('Setup completed');
     });
     
     await test.step('Action: main action', async () => {
-        // Main action with logger
+        // Main action via page object methods
+        await loginPage.login('user', 'pass');
         logger.info('Action performed');
     });
     
     await test.step('Assert: verify', async () => {
-        // Assertions
-        await expect(page.locator()).toBeVisible();
+        // Assertions MUST be encapsulated in page objects
+        await loginPage.verifyDashboardVisible();
     });
 });
 ```
@@ -372,9 +375,9 @@ Analyze and optimize element locators for stability and maintainability. This ag
 
 ### Core Expertise
 - Evaluate selector robustness and stability
-- Recommend getByRole() over CSS/XPath
+- Recommend getByRole(), data-id, id, class, or clear references
 - Identify and fix flaky selectors
-- Suggest XPath alternatives and improvements
+- Enforce rules against dynamic text and position-based locators
 - Optimize locator specificity
 - Evaluate accessibility compliance
 - Create selector comparison analysis
@@ -382,7 +385,7 @@ Analyze and optimize element locators for stability and maintainability. This ag
 ### When to Invoke
 - Selectors frequently break or are flaky
 - Need more robust locators for stability
-- Migrating from CSS/XPath to getByRole()
+- Upgrading selector strategy to prefer clear references (getByRole(),data-id/id/class)
 - Analyzing selector performance
 - Upgrading selector strategy
 - Handling dynamic elements
@@ -390,12 +393,13 @@ Analyze and optimize element locators for stability and maintainability. This ag
 ### Typical Workflow
 1. **Review Selectors** - Analyze current selectors
 2. **Assess Stability** - Evaluate robustness
-3. **Recommend Strategy** - Propose improvements
-4. **Prioritize Methods** - Rank by best practice
+3. **Recommend Strategy** - Propose improvements based on best practices
+4. **Refactor Locators** - Remove dynamic text and .first()/.last() locators
 5. **Test Updates** - Verify new selectors work
 6. **Document Strategy** - Record best practices
 
-### Selector Priority (Best to Worst)
+### Selector Priority & Best Practices
+
 1. **getByRole()** - Most accessible and stable
 2. **getByLabel()** - Good for form labels
 3. **getByPlaceholder()** - Good for inputs
@@ -404,9 +408,13 @@ Analyze and optimize element locators for stability and maintainability. This ag
 6. **CSS selectors** - Less stable
 7. **XPath** - Most fragile (use as last resort)
 
+**Critical Locator Rules:**
+- **Avoid Dynamic Text Locators**: Do NOT pick a text locator (e.g., `getByText()`) if the text might be changing based on the context (such as account name, product name, description, etc.).
+- **Avoid `.first()` or `.last()`**: Do NOT go with `.first()` or `.last()` locators. Instead, find the exact locator inside a list or container based on the flow.
+
 ### Example Invocation
 ```
-"Review and optimize all selectors in login-page-object.ts.
+"Review and optimize all selectors in login.page.ts.
 Convert CSS selectors to getByRole() where possible.
 Suggest improvements and test with actual page to ensure stability."
 ```
@@ -588,6 +596,7 @@ Review and improve test code quality and maintainability. This agent specializes
 - Poor test.step() organization
 - Missing assertions
 - Inconsistent naming
+- Test files containing `expect` or `page` references (move assertions to page objects and use fixtures for page objects)
 
 ### Anti-Patterns to Fix
 ```typescript
@@ -761,7 +770,7 @@ Agent 9 (Quality review) - identify issues
 
 ### File Naming
 - Tests: `TC_{TYPE}_{FEATURE}_{NUMBER}_descriptive-name-test.ts`
-- Page Objects: `{feature}-page-object.ts` in `page-objects/{feature}/`
+- Page Objects: `{feature}.page.ts` in `pages/{feature}/`
 - Test Data: JSON files in `test-data/json/{category}/`
 
 ### Test Tags
@@ -786,7 +795,7 @@ Always reference via `process.env`:
 ```typescript
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
-const url = process.env.URL;
+const url = process.env.BASE_URL;
 ```
 
 ---

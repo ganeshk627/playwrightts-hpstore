@@ -1,5 +1,5 @@
 import { type Locator, type Page, expect} from "@playwright/test";
-import { CheckoutSuccessPage } from "./checkout-success-page-object";
+import { CheckoutSuccessPage } from "./checkout-success.page";
 
 
 export class CheckoutConfirmationPage {

@@ -13,13 +13,12 @@ export class ForgotPasswordPage {
         this.page = page;
         // In the Harry Potter app, forgot password is not fully implemented yet
         this.forgotEmail = page.locator('input[type="email"]');
-        this.resetBtn = page.getByRole('button', { name: 'Sign In' });
+        this.resetBtn = page.getByRole('button', { name: 'Reset Password' });
     };
 
     // methods
     async resetPassword(username: string, email: string) {
         logger.info('Forgot password flow is not implemented in the application yet.');
-        // Just fill the email and click the button to simulate some action
         await this.forgotEmail.fill(email);
         await this.resetBtn.click();
         logger.info('Reset Password simulated successfully');

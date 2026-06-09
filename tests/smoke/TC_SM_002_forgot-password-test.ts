@@ -1,20 +1,11 @@
-import { test, expect, type Page } from '@playwright/test';
-import { LoginPage } from '../../pages/login/login-page-object';
-import logger from '../../utils/winston-logger/logger-util';
-import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password-page-object';
-import { faker } from '@faker-js/faker';
-import { HomePage } from '../../pages/homepage/homepage-page-object';
-// const { faker } = require('@faker-js/faker');
+import { test } from '../../pages/fixture/fixture';
+import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password.page';
 
-
-test('Forgot Password @smoke', async ({ page }) => {
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
+test('Forgot Password @smoke', async ({ page, homePage, loginPage }) => {
     const forgotPasswordPage = new ForgotPasswordPage(page);
 
     await test.step('Open application', async () => {
-        await page.goto('/');
-        logger.info(`Navigated to ${await page.url()}`);
+        await homePage.openApplication();
         await homePage.openLoginOrRegistrationPage();
     });
 
@@ -22,5 +13,4 @@ test('Forgot Password @smoke', async ({ page }) => {
         await loginPage.clickForgotPasswordLink();
         await forgotPasswordPage.resetPassword(process.env.USERNAME!, process.env.EMAIL!);
     });
-
 });

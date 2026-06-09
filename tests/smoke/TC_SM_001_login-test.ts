@@ -1,33 +1,36 @@
-import {test, expect, type Page} from '@playwright/test';
-import {LoginPage} from '../../pages/login/login-page-object';
+import { test, expect } from '../../pages/fixture/fixture';
 import logger from '../../utils/winston-logger/logger-util';
-import { HomePage } from '../../pages/homepage/homepage-page-object';
 
+test('Login Test @smoke', async({ page, homePage, loginPage })=>{
 
-test('Login Test @smoke', async({page})=>{
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
-
-    await test.step('Opening Login Page', async () => {
-        await page.goto('/');
-        logger.info(`Navigated to ${await page.url()}`);
+    await test.step('Setup: Navigate to application and open login page', async () => {
+        logger.info('Starting smoke login test');
+        logger.info(`Base URL: ${process.env.BASE_URL}`);
+        
+        await homePage.openApplication();
+        logger.info('Application opened successfully');
+        
         await homePage.openLoginOrRegistrationPage();
+        logger.info('Login page opened successfully');
     });
 
-    await test.step('Enter username and password', async () => {
-        await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);
-        logger.info('Entered username and password');
-
+    await test.step('Action: Enter credentials and submit login form', async () => {
+        const username = process.env.USERNAME!;
+        logger.info('Submitting login credentials');
+        
+        await loginPage.login(username, process.env.PASSWORD!);
+        logger.info('Login completed successfully');
     });
 
-    await test.step('Validate dashboard', async () => {  
-        // After login, user is redirected to homepage
-        await expect(page).toHaveURL(/.*\/|.*\/home/);
-        // Check for login success toast or verification
-        await expect(page.getByText('Login successful!', { exact: false })).toBeVisible().catch(() => {
-            logger.info('Login success toast not visible, but user is logged in');
-        });
-        logger.info('Successfully logged in and redirected to home');
+    await test.step('Assert: Verify successful login and dashboard display', async () => {
+        logger.info('Verifying login success');
+        
+        await expect(page).toHaveURL(/.*\/(home|dashboard)?$/i);
+        logger.info('Dashboard URL verified');
+        
+        await expect(page.getByText('Login successful!', { exact: false })).toBeVisible();
+        logger.info('Login success message displayed');
     });
 
+    logger.info('✅ Smoke login test passed successfully');
 })
