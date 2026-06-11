@@ -26,6 +26,15 @@ export class ProductBasketPage {
     };   
 
     // methods
+    async navigateToCart() {
+        await this.page.goto('/cart');
+        logger.info('Navigated to /cart');
+    }
+
+    async verifyProductInCart(productName: string) {
+        await expect(this.page.locator(`text=${productName}`).first()).toBeVisible();
+    }
+
     async clickCheckoutProduct1() {
         await expect(this.page).toHaveURL(/checkout\/cart/);
         await this.checkoutButton1.click();

@@ -41,6 +41,10 @@ export class CheckoutPaymentPage {
     };   
 
     // methods
+    async verifyCheckoutPaymentPageLoaded() {
+        await expect(this.page).toHaveURL(/.*\/place-order/);
+    }
+
     async clickContinueButton() {
         await expect(this.page).toHaveURL(/checkout\/payment/);
         await this.continueButton.click();

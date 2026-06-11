@@ -1,28 +1,22 @@
-import { test, expect } from '../../../pages/fixture/fixture';
-import logger from '../../../utils/winston-logger/logger-util';
+import { test } from '../../../pages/fixture/fixture';
 
-test('Add Makeup Products @smoke', async({ page, homePage, loginPage })=>{
+test('Add Makeup Products @smoke', async({ homePage, loginPage, dashboardPage, productNavigationPage, productBasketPage })=>{
 
     await test.step('Login as Ganesh', async () => {
         await homePage.openApplication();
-        logger.info(`Navigated to ${await page.url()}`);
         await homePage.openLoginOrRegistrationPage();
         await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);
-        logger.info('Entered username and password');
-        await expect(await page.locator('#customer_menu_top')).toContainText('Welcome back');
-
+        await dashboardPage.verifyWelcomeBackMessage();
     });
 
     await test.step('Navigating to Makeup products page',async () => {
-        await page.locator('#categorymenu').getByRole('link', { name: 'Makeup' }).click();
-        await page.locator('#maincontainer li').filter({ hasText: 'Face' }).click();  
+        await productNavigationPage.switchToProduct('Makeup', 'Face');
     });
 
     await test.step('Adding one makeup product to card and removing it',async () => {
-        await page.getByRole('link', { name: 'Delicate Oil-Free Powder Blush' }).click();
-        await page.getByRole('link', { name: ' Add to Cart' }).click();
-        await page.locator('//a[contains(@href, "remove")]').click();
-        await page.getByRole('link', { name: ' Continue' }).click();
+        await productNavigationPage.addProductToCart('Delicate Oil-Free Powder Blush');
+        await productBasketPage.removeProductFromCart('Delicate Oil-Free Powder Blush');
+        await productBasketPage.clickContinue();
     })
 
 })

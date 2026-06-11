@@ -375,7 +375,7 @@ Analyze and optimize element locators for stability and maintainability. This ag
 
 ### Core Expertise
 - Evaluate selector robustness and stability
-- Recommend getByRole(), data-id, id, class, or clear references
+- Recommend getByRole(), auto-id, id, class, or clear references
 - Identify and fix flaky selectors
 - Enforce rules against dynamic text and position-based locators
 - Optimize locator specificity
@@ -385,7 +385,7 @@ Analyze and optimize element locators for stability and maintainability. This ag
 ### When to Invoke
 - Selectors frequently break or are flaky
 - Need more robust locators for stability
-- Upgrading selector strategy to prefer clear references (getByRole(),data-id/id/class)
+- Upgrading selector strategy to prefer clear references (getByRole(),auto-id/id/class)
 - Analyzing selector performance
 - Upgrading selector strategy
 - Handling dynamic elements

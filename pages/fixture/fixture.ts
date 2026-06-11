@@ -9,6 +9,7 @@ import { ProductViewPage } from '../products/product-view.page';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password.page';
 import { OrderHistoryPage } from '../products/checkout/order-history.page';
 import { OrderDetailsPage } from '../products/checkout/order-details.page';
+import { CheckoutPaymentPage } from '../products/checkout/checkout-payment.page';
 import testdata from '../../test-data/json/testdata.json';
 
 /**
@@ -77,6 +78,12 @@ export type TestFixtures = {
    * Use for viewing detailed information about a specific order
    */
   orderDetailsPage: OrderDetailsPage;
+
+  /**
+   * CheckoutPaymentPage instance - initialized with page context
+   * Use for entering payment and delivery information during checkout
+   */
+  checkoutPaymentPage: CheckoutPaymentPage;
 
   /**
    * Authenticated user fixture
@@ -154,6 +161,11 @@ export const test = base.extend<TestFixtures>({
   orderDetailsPage: async ({ page }, use) => {
     const orderDetailsPage = new OrderDetailsPage(page);
     await use(orderDetailsPage);
+  },
+
+  checkoutPaymentPage: async ({ page }, use) => {
+    const checkoutPaymentPage = new CheckoutPaymentPage(page);
+    await use(checkoutPaymentPage);
   },
 
   /**

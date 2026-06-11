@@ -33,6 +33,7 @@ export class LoginPage {
 
     async login(username: string, password: string) {
         logger.info(`Attempting login with username: ${username}`);
+        logger.info('Submitting login credentials');
         await expect(this.page).toHaveURL(/.*\/login/);
         logger.info('Login page loaded, entering credentials');
         
@@ -44,10 +45,12 @@ export class LoginPage {
         
         await expect(this.passwordInput).toHaveValue(password);
         await this.signInBtn.click();
+        logger.info('Entered username and password');
         logger.info('Sign In button clicked, waiting for redirect');
         
         // Wait for redirect after login
         await expect(this.page).not.toHaveURL(/.*\/login/);
+        logger.info('Login completed successfully');
         logger.info('Successfully logged in and redirected to dashboard');
         return new DashboardPage(this.page);
     };

@@ -30,6 +30,7 @@ export class HomePage extends BasePage  {
         await this.loginLink.click();
         logger.info('Successfully clicked LOGIN link');
         await expect(this.page).toHaveURL(/.*\/login/i);
+        logger.info('Login page opened successfully');
     }
 
     async navigateToCollection(){

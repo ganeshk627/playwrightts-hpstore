@@ -13,10 +13,9 @@ export class OrderHistoryPage {
 
     constructor(private page: Page) {
         this.page = page;
-        // Order list and rows identified via MCP inspection
-        this.myOrdersHeading = page.locator('div').filter({ hasText: this.MY_ORDERS_TITLE }).locator('visible=true');
+        this.myOrdersHeading = page.locator('auto-id="my-orders"');
         this.orderListContainer = page.locator('[class*="order"], [class*="Order"], table, [role="table"]').first();
-        this.orderRows = page.locator('tr, [class*="order-item"], [class*="orderItem"], [class*="order-row"]');
+        this.orderRows = page.locator('div[auto-id="order-item"]');
     }
 
     /**
@@ -34,6 +33,7 @@ export class OrderHistoryPage {
     async verifyOrderHistoryPageLoaded() {
         await expect(this.page).toHaveURL(/.*\/orders/);
         await expect(this.myOrdersHeading).toBeVisible();
+        await expect(this.myOrdersHeading).toHaveText(this.MY_ORDERS_TITLE);
         logger.info('Order History page loaded successfully');
         return this;
     }
@@ -55,6 +55,14 @@ export class OrderHistoryPage {
         const count = await this.orderRows.count();
         logger.info(`Found ${count} orders in order history`);
         return count;
+    }
+
+    /**
+     * Verify that there is at least one order
+     */
+    async verifyHasOrders() {
+        const count = await this.getOrderCount();
+        expect(count).toBeGreaterThan(0);
     }
 
     /**
@@ -80,6 +88,7 @@ export class OrderHistoryPage {
         await expect(firstOrderRow).toBeVisible();
         const orderText = await firstOrderRow.textContent();
         logger.info(`Most recent order details: ${orderText}`);
+        logger.info('Verified order appears in history');
         return firstOrderRow;
     }
 

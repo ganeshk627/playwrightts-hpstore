@@ -96,6 +96,7 @@ export class ProductNavigationPage {
         await this.page.locator('p', { hasText: productName }).click();
         logger.info(`Clicked on product: ${productName}`);
         const productBasketPage = await new ProductViewPage(this.page).addProductToCart(productName, size, color);
+        logger.info(`Added '${productName}' to cart`);
         return productBasketPage;
     };
 

@@ -1,5 +1,6 @@
 import { type Locator, type Page, expect} from "@playwright/test";
 import { DashboardPage } from "../../dashboard/dashboard.page";
+import logger from "../../../utils/winston-logger/logger-util";
 
 
 export class CheckoutSuccessPage {
@@ -22,6 +23,7 @@ export class CheckoutSuccessPage {
     async clickContinueButton() {
         await expect(this.page).toHaveURL(/checkout\/success/);
         await this.continueButton.click();
+        logger.info('Order completed successfully');
         return new DashboardPage(this.page);
     };
 
