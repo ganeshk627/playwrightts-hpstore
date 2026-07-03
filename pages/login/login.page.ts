@@ -64,6 +64,7 @@ export class LoginPage {
         await this.createAccountLink.click();
         logger.info('Navigated to create account page');
     }
+    
 
     
 

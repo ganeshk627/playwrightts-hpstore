@@ -1,1 +1,41 @@
-{}
+{
+    "login": {
+        "email": "harry@hogwarts.com",
+        "password": "harry1234"
+    },
+    "reset password": {
+        "email": "reset@hp.com"
+    },
+    "registered users": [
+        {
+            "name": "Harry Potter",
+            "email": "harry@hogwarts.com",
+            "password": "harry1234"
+        },
+        {
+            "name": "Hermione Granger",
+            "email": "hermione@hogwarts.com",
+            "password": "hermione1234"
+        },
+        {
+            "name": "Ron Weasley",
+            "email": "ron@hogwarts.com",
+            "password": "ron12345678"
+        },
+        {
+            "name": "Draco Malfoy",
+            "email": "draco@hogwarts.com",
+            "password": "draco1234"
+        },
+        {
+            "name": "Luna Lovegood",
+            "email": "luna@hogwarts.com",
+            "password": "luna12345678"
+        },
+        {
+            "name": "Tom Riddle",
+            "email": "tomriddle@hogwarts.com",
+            "password": "tommy@1234"
+        }
+    ]
+}

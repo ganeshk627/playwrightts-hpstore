@@ -22,7 +22,7 @@ export class ProductViewPage {
         logger.info(`Product page loaded for: ${productName}`);
         
         if (size) {
-            await this.page.getByRole('button', { name: size, exact: true }).click();
+            await this.page.getByRole('button', { name: size, exact: true }).click({delay: 1000});
             logger.info(`Selected size: ${size}`);
         }
         
@@ -31,7 +31,7 @@ export class ProductViewPage {
             logger.info(`Selected color: ${color}`);
         }
         
-        await this.addToCartButton.click();
+        await this.addToCartButton.click({delay: 2000});
         logger.info(`Clicked 'Add To Cart' button for product: ${productName}`);
         return new ProductBasketPage(this.page);
     };

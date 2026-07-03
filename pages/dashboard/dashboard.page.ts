@@ -5,6 +5,7 @@ import logger from '../../utils/winston-logger/logger-util';
 export class DashboardPage {
 
     //variables
+    private readonly profileName: Locator;
     private readonly myProfileMenu: Locator;
     private readonly ordersMenu: Locator;
     private readonly logoutMenu: Locator;
@@ -12,20 +13,22 @@ export class DashboardPage {
     //constructor
     constructor(private page: Page) {
         this.page = page;
+        this.profileName = page.locator('[auto-id="UserName"]');
         this.myProfileMenu = page.locator('.dropdown-menu p', { hasText: 'My profile' });
         this.ordersMenu = page.locator('.dropdown-menu p', { hasText: 'Orders' });
         this.logoutMenu = page.locator('.dropdown-menu p', { hasText: 'Logout' });
     };
 
     // methods
+    async validateProfileName(expectedName: string) {
+        const actualName = await this.profileName.textContent();
+        expect(actualName?.trim()).toBe(expectedName);
+        logger.info(`Profile name validated: ${actualName}`);
+    }
+
     async verifyWelcomeMessage() {
         await expect(this.page.getByText('Login successful!')).toBeVisible({ timeout: 5000 }).catch(() => {});
         logger.info('Login success message displayed');
-    }
-
-    async verifyWelcomeBackMessage() {
-        await expect(this.page.locator('#customer_menu_top')).toContainText('Welcome back');
-        logger.info('Welcome back message displayed');
     }
 
     async verifyDashboardURL() {
@@ -35,10 +38,6 @@ export class DashboardPage {
 
     async waitForDashboardToLoad() {
         await this.page.waitForLoadState('networkidle');
-    }
-
-    async getAddressBookContacts() {
-        return await this.addressBookContacts.textContent();
     }
 
 };

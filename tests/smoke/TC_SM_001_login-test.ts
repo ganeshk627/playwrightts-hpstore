@@ -1,6 +1,9 @@
 import { test } from '../../pages/fixture/fixture';
 
-test('Login Test @smoke', async({ homePage, loginPage, dashboardPage })=>{
+test('Login and Logout Test @smoke', async ({ homePage, loginPage, dashboardPage, testdata }) => {
+    const test_name = 'login'
+    const email = testdata[test_name].email;
+    const password = testdata[test_name].password;
 
     await test.step('Setup: Navigate to application and open login page', async () => {
         await homePage.openApplication();
@@ -8,8 +11,7 @@ test('Login Test @smoke', async({ homePage, loginPage, dashboardPage })=>{
     });
 
     await test.step('Action: Enter credentials and submit login form', async () => {
-        const username = process.env.USERNAME!;
-        await loginPage.login(username, process.env.PASSWORD!);
+        await loginPage.login(email, password);
     });
 
     await test.step('Assert: Verify successful login and dashboard display', async () => {
@@ -17,4 +19,6 @@ test('Login Test @smoke', async({ homePage, loginPage, dashboardPage })=>{
         await dashboardPage.verifyWelcomeMessage();
     });
 
+    // TODO: Script to logout and verify logout success message and redirection to login page
+    
 })

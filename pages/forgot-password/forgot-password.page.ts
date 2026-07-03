@@ -6,21 +6,21 @@ export class ForgotPasswordPage {
 
     //variables
     private readonly forgotEmail: Locator;
-    private readonly resetBtn: Locator;
+    private readonly sendResetButton: Locator;
 
     //constructor
     constructor(private page: Page) {
         this.page = page;
         // In the Harry Potter app, forgot password is not fully implemented yet
         this.forgotEmail = page.locator('input[type="email"]');
-        this.resetBtn = page.getByRole('button', { name: 'Reset Password' });
+        this.sendResetButton = page.getByRole('button', { name: 'Send Reset Link' });
     };
 
     // methods
-    async resetPassword(username: string, email: string) {
+    async resetPassword(email: string) {
         logger.info('Forgot password flow is not implemented in the application yet.');
         await this.forgotEmail.fill(email);
-        await this.resetBtn.click();
+        await this.sendResetButton.click();
         logger.info('Reset Password simulated successfully');
     }
 

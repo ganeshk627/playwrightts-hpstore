@@ -13,7 +13,7 @@ export class OrderHistoryPage {
 
     constructor(private page: Page) {
         this.page = page;
-        this.myOrdersHeading = page.locator('auto-id="my-orders"');
+        this.myOrdersHeading = page.locator('[auto-id="my-orders"]');
         this.orderListContainer = page.locator('[class*="order"], [class*="Order"], table, [role="table"]').first();
         this.orderRows = page.locator('div[auto-id="order-item"]');
     }
