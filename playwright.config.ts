@@ -9,7 +9,7 @@ console.log(`Environment: ${process.env.ENV}`)
 if (!process.env.ENV) {
   require("dotenv").config({
     override: true,
-    path: `${__dirname}//environments//.env.dev` });
+    path: `${__dirname}//environments//.env.local` });
 } else {
   require("dotenv").config({
     override: true, // use if needed

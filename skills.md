@@ -268,7 +268,7 @@ Manage multi-environment testing through dotenv configuration files. Supports di
 ### Environment Files Location & Setup
 ```
 environments/
-├── .env.dev          # Local development environment
+├── .env.local        # Local development environment
 ├── .env.qa           # QA/staging environment
 └── .env.automation   # Automation/CI environment
 ```
@@ -315,7 +315,7 @@ EMAIL=automation-email@example.com
 
 ### Running Tests by Environment
 ```bash
-npm run test                      # Default (uses .env.dev)
+npm run test                    # Default (uses .env.local)
 npm run test:env:dev            # Explicit dev environment
 npm run test:env:qa             # QA environment
 npm run test:env:automation     # Automation environment - use in CI
@@ -341,7 +341,7 @@ The framework automatically loads the correct .env file:
 if (!process.env.ENV) {
   require("dotenv").config({
     override: true,
-    path: `${__dirname}//environments//.env.dev`
+    path: `${__dirname}//environments//.env.local`
   });
 } else {
   require("dotenv").config({
