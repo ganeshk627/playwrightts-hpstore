@@ -120,15 +120,9 @@ tests/
 ### Test Structure Pattern
 ```typescript
 import { test, expect, type Page } from '@playwright/test';
-import { HomePage } from '../../pages/homepage/homepage.page';
-import { LoginPage } from '../../pages/login/login.page';
-import { AddMakeupProductsPage } from '../../pages/add-to-cart/add-makeup-products.page';
 import logger from '../../utils/winston-logger/logger-util';
 
-test('Descriptive test name explaining what is tested @smoke', async ({ page }) => {
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
-    const addMakeupProductsPage = new AddMakeupProductsPage(page);
+test('Descriptive test name explaining what is tested @smoke', async ({page, homePage, loginPage, addMakeupProductsPage, cartPage}) => {
     
     await test.step('Setup: Navigate to application', async () => {
         await page.goto('/');
@@ -146,8 +140,7 @@ test('Descriptive test name explaining what is tested @smoke', async ({ page }) 
     });
     
     await test.step('Assert: Verify results', async () => {
-        await expect(page).toHaveURL(/.*\/expected.page/);
-        await expect(page.locator('selector')).toBeVisible();
+        await cartPage.verifyCartContents();
     });
 });
 ```

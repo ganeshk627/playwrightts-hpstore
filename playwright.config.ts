@@ -9,7 +9,8 @@ console.log(`Environment: ${process.env.ENV}`)
 if (!process.env.ENV) {
   require("dotenv").config({
     override: true,
-    path: `${__dirname}//environments//.env.local` });
+    path: `${__dirname}//environments//.env.local`
+  });
 } else {
   require("dotenv").config({
     override: true, // use if needed
@@ -36,12 +37,12 @@ export default defineConfig({
   reporter: [
     ['html', { open: 'never' }],
     ['list'],
-    ["allure-playwright", 
-    // {
-    //   detail: true,
-    //     outputFolder: "my-allure-results",
-    //     suiteTitle: false,
-    // }
+    ["allure-playwright",
+      // {
+      //   detail: true,
+      //     outputFolder: "my-allure-results",
+      //     suiteTitle: false,
+      // }
     ]
   ],
 
@@ -57,7 +58,18 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'off',
-    headless: false,
+    // headless: false,
+    launchOptions: {
+      args: [
+        '--start-maximized',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-infobars',
+        '--disable-extensions',
+        '--disable-gpu',
+        '--no-sandbox',
+      ],
+      slowMo: 1000,
+    },
   },
 
   timeout: 60000,

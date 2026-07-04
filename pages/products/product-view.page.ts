@@ -1,18 +1,17 @@
 import { type Locator, type Page, expect } from "@playwright/test";
 import { ProductBasketPage } from "./product-basket.page";
 import logger from "../../utils/winston-logger/logger-util";
+import { BasePage } from "../base.page";
 
 
-export class ProductViewPage {
+export class ProductViewPage extends BasePage {
 
     //variables
     private readonly addToCartButton: Locator;
 
-
-
     //constructor
-    constructor(private page: Page) {
-        this.page = page;
+    constructor(page: Page) {
+        super(page);
         this.addToCartButton = page.getByRole('button', { name: 'Add To Cart' });
     };
 
@@ -32,6 +31,7 @@ export class ProductViewPage {
         }
         
         await this.addToCartButton.click({delay: 2000});
+        await this.waitForPageLoad('networkidle', 10000);
         logger.info(`Clicked 'Add To Cart' button for product: ${productName}`);
         return new ProductBasketPage(this.page);
     };
